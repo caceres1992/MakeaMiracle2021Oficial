@@ -2,10 +2,7 @@ package com.code2000.makeamiracle.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Data
@@ -19,4 +16,6 @@ public class Sponsor {
     private String address;
     private String phone;
     private String email;
+    @ManyToOne
+    private Country country;
 }
