@@ -5,9 +5,13 @@ import com.code2000.makeamiracle.model.Student;
 import com.code2000.makeamiracle.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 @Transactional
@@ -21,6 +25,12 @@ public class StudentService {
             return ResponseEntity.ok().body("no hay nada que mostrar");
         } else
             return ResponseEntity.ok().body(repository.findAll());
+    }
+
+    public ResponseEntity<?> countAllStudent() {
+        Map<String,Integer> map = new HashMap<>();
+        map.put("allStudent", repository.findAll().size());
+        return  ResponseEntity.ok().body(map);
     }
 
 

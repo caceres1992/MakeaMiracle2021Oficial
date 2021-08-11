@@ -7,6 +7,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
@@ -19,6 +22,11 @@ public class StudentCotroller {
     @GetMapping("/student")
     public ResponseEntity<?> findAll() {
         return service.findAll();
+    }
+
+    @GetMapping("/student/all")
+    public ResponseEntity<?> countAllStudent() {
+        return service.countAllStudent();
     }
 
     @GetMapping("/student/{id}")
