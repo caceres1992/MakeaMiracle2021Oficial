@@ -29,4 +29,11 @@ public class Student {
     private TypeDocument typeDocument;
     @ManyToOne
     private District district;
+
+    @PrePersist
+    void Prepersit (){
+        createAt = LocalDate.now();
+        isActive = true;
+
+    }
 }
