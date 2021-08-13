@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/student")
 @CrossOrigin
 public class StudentCotroller {
 
@@ -19,32 +19,32 @@ public class StudentCotroller {
     @Autowired
     StudentService service;
 
-    @GetMapping("/student")
+    @GetMapping
     public ResponseEntity<?> findAll() {
         return service.findAll();
     }
 
-    @GetMapping("/student/all")
+    @GetMapping("/count")
     public ResponseEntity<?> countAllStudent() {
         return service.countAllStudent();
     }
 
-    @GetMapping("/student/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<?> findById(@PathVariable Long id) throws Throwable {
         return service.findById(id);
     }
 
-    @PostMapping("/student")
+    @PostMapping
     public ResponseEntity<?> addStudent(@RequestBody Student student) {
         return service.addStudent(student);
     }
 
-    @PutMapping("/student/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody Student student) throws Exception {
         return service.updateStudent(id, student);
     }
 
-    @PatchMapping("/student/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<?> isActive(@PathVariable Long id) throws Exception {
         return service.isActive(id);
     }
