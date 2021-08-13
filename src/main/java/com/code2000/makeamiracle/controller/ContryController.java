@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/country")
 @CrossOrigin
 public class ContryController {
 
     @Autowired
     CountryService services;
 
-    @GetMapping("/country")
+    @GetMapping
     public ResponseEntity<?> getAll() {
         if (services.getAll().size() > 0) {
             return ResponseEntity.ok().body(services.getAll());
