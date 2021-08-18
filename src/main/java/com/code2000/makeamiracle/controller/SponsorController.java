@@ -34,12 +34,12 @@ public class SponsorController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addStudent(@RequestBody Sponsor sponsor) {
+    public ResponseEntity<?> addSponsor(@RequestBody Sponsor sponsor) {
         return service.addSponsor(sponsor);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateStudent(@PathVariable Long id, @RequestBody Sponsor sponsor) throws Exception {
+    public ResponseEntity<?> updateSponsor(@PathVariable Long id, @RequestBody Sponsor sponsor) throws Exception {
         return service.updateSponsor(id, sponsor);
     }
 
