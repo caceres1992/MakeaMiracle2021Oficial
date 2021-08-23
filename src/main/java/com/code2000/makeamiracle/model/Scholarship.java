@@ -12,7 +12,7 @@ public class Scholarship {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private LocalDate creteAt ;
+    private LocalDate creteAt;
     private LocalDate finishAt;
     private String observation;
     private String studentCode;
@@ -28,7 +28,10 @@ public class Scholarship {
     private Employee employee;
     private String status;
 
-
-
+    @PrePersist
+    void Prepersit() {
+        creteAt = LocalDate.now();
+        status = "activo";
+    }
 
 }
