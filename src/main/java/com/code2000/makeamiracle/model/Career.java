@@ -1,6 +1,7 @@
 package com.code2000.makeamiracle.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import javax.persistence.*;
@@ -14,8 +15,6 @@ public class Career {
     private String name;
     @ManyToOne
     private Institute institute;
-
-
 
 
 }

@@ -33,7 +33,7 @@ public class MapStructMapperImpl implements IScholarShipDto {
         dto.setStudentFullName(firstNameStudent.concat(" ").concat(firstLastnameStudent));
         dto.setInstituteName(scholarship.getCareer().getInstitute().getName());
         dto.setStudentCode(scholarship.getStudentCode());
-        dto.setCreateAt(scholarship.getCreteAt().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+        dto.setCreateAt(scholarship.getCreteAt());
         dto.setStatus(scholarship.getStatus());
 
 

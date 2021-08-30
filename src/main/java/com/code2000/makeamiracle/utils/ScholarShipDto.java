@@ -3,6 +3,8 @@ package com.code2000.makeamiracle.utils;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.time.LocalDate;
+
 @AllArgsConstructor
 @Data
 public class ScholarShipDto {
@@ -12,7 +14,7 @@ public class ScholarShipDto {
     String instituteName;
     String studentCode;
     String careerName;
-    String createAt;
+    LocalDate createAt;
     String status;
 
 
