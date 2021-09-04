@@ -30,7 +30,7 @@ public class CareerController {
         return service.getCareerByInstitute(id);
     }
 
-    @PostMapping("/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<CareerDto> dtoResponseEntity(@PathVariable Long id, @RequestBody Career career) throws ResourceNotFundException {
         return service.dtoResponseEntity(id, career);
     }
