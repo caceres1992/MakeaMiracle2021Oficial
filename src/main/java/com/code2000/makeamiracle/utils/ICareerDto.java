@@ -7,9 +7,9 @@ import org.mapstruct.Mapper;
 import java.util.List;
 
 @Mapper
-public interface IInstiteDto {
+public interface ICareerDto {
 
-    List<InstituteDto> toInstituteDto(Institute institute,Career careers);
-    List<Career> toCareerDto(Institute institute, List<Career> careers);
+    CareerDto toCareerDto(Career careers);
+    List<CareerDto> toCareerDtos( List<Career> careers);
 
 }

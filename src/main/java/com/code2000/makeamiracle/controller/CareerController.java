@@ -1,8 +1,10 @@
 package com.code2000.makeamiracle.controller;
 
 
+import com.code2000.makeamiracle.config.ResourceNotFundException;
 import com.code2000.makeamiracle.model.Career;
 import com.code2000.makeamiracle.service.CareerService;
+import com.code2000.makeamiracle.utils.CareerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping
+@RequestMapping("/career")
 @CrossOrigin
 public class CareerController {
 
@@ -23,8 +25,14 @@ public class CareerController {
         return service.getAllCareer();
     }
 
-    @PostMapping
-    public ResponseEntity<?> saveCareer(@RequestBody List<Career> careers,@PathVariable String string) {
-        return service.saveCareer(careers,string);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCareerByInstitute(@PathVariable Long id) {
+        return service.getCareerByInstitute(id);
     }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<CareerDto> dtoResponseEntity(@PathVariable Long id, @RequestBody Career career) throws ResourceNotFundException {
+        return service.dtoResponseEntity(id, career);
+    }
+
 }

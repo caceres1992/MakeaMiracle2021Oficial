@@ -7,6 +7,7 @@ import com.code2000.makeamiracle.repository.CareerRepository;
 import com.code2000.makeamiracle.repository.InstituteRepository;
 import com.code2000.makeamiracle.utils.InstituteDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,43 +31,41 @@ public class IntituteService {
     }
 
 
-    public ResponseEntity<?> addInstituteAndCareer(Institute institute) {
-
-        return ResponseEntity.ok(repository.save(institute));
-    }
+    public ResponseEntity<String> addMoreCareer(InstituteDto dto) {
 
 
-    public ResponseEntity<?> addMoreCareer(InstituteDto dto) {
-
-        try {
+        if (repository.existsByName(dto.getInstitute().getName())) {
+            Institute institute = repository.getInstituteByName(dto.getInstitute().getName());
+            List<Career> careerList = careerRepository.saveAll(dto.getCareer());
+            for (Career career : careerList) {
+                career.setInstitute(institute);
+            }
+            return new ResponseEntity<>("SUCCESSFULLY WITH NAME EXISTING", HttpStatus.CREATED);
+        } else {
             Institute addInstitute = repository.save(dto.getInstitute());
-
             List<Career> careerList = careerRepository.saveAll(dto.getCareer());
             for (Career career : careerList) {
                 career.setInstitute(addInstitute);
             }
-
-            return ResponseEntity.ok("enviando correctamente");
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Error al enviar ");
-
+            return new ResponseEntity<>("SUCCESSFULLY WITH NEW NAME", HttpStatus.CREATED);
         }
+
 
     }
 
     public ResponseEntity<?> updateInstitute(Long id, Institute institute) {
 
 
-            Institute updateInstitute = repository.findById(id).orElseThrow(() -> new RuntimeException("Institute does not exist with id ".concat(institute.getId().toString())));
+        Institute updateInstitute = repository.findById(id).orElseThrow(() -> new RuntimeException("Institute does not exist with id ".concat(institute.getId().toString())));
 
-            if (institute.getName() != null) {
-                updateInstitute.setName(institute.getName());
-            }
-            if (institute.getTypeInstitute() != null) {
-                updateInstitute.setTypeInstitute(institute.getTypeInstitute());
-            }
-            repository.save(updateInstitute);
-            return ResponseEntity.ok("update successfully");
+        if (institute.getName() != null) {
+            updateInstitute.setName(institute.getName());
+        }
+        if (institute.getTypeInstitute() != null) {
+            updateInstitute.setTypeInstitute(institute.getTypeInstitute());
+        }
+        repository.save(updateInstitute);
+        return ResponseEntity.ok("update successfully");
 
 
     }

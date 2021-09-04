@@ -1,10 +1,15 @@
 package com.code2000.makeamiracle.service;
 
+import com.code2000.makeamiracle.config.ResourceNotFundException;
 import com.code2000.makeamiracle.model.Career;
 import com.code2000.makeamiracle.model.Institute;
 import com.code2000.makeamiracle.repository.CareerRepository;
 import com.code2000.makeamiracle.repository.InstituteRepository;
+import com.code2000.makeamiracle.utils.CareerDto;
+import com.code2000.makeamiracle.utils.CareerDtoImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,37 +31,31 @@ public class CareerService {
         return careerRepository.findAll();
     }
 
-    public ResponseEntity<?> saveCareer(List<Career> list, String nameInstitute) {
+    public ResponseEntity<List<CareerDto>> getCareerByInstitute(Long id) {
 
-        List<Career> nuevaLista = new ArrayList<>();
-        Institute getInttute = addInstitute(nameInstitute);
-
-
-        for (Career career : list) {
-
-            career.setInstitute(getInttute);
-            nuevaLista.add(career);
-            careerRepository.saveAll(nuevaLista);
+        CareerDtoImpl careerDto = new CareerDtoImpl();
+        List<CareerDto> careerDtoList = careerDto.toCareerDtos(careerRepository.findByInstituteId(id));
+        if (careerDtoList.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
-
-        return null;
+        return new ResponseEntity<>(careerDtoList, HttpStatus.OK);
     }
 
-    public Institute addInstitute(String nameinstitute) {
 
-        Institute nuevoInstituto = new Institute();
+    public ResponseEntity<CareerDto> dtoResponseEntity(Long id, Career career) throws ResourceNotFundException {
+        Career updateCareer = careerRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFundException("not found career with id " + id)
+        );
 
-
-        Institute validarInstituto;
-        if (instituteRepository.existsByName(nameinstitute.toUpperCase())) {
-            validarInstituto = instituteRepository.getInstituteByName(nameinstitute.toUpperCase());
-        } else {
-            nuevoInstituto.setName(nameinstitute.toUpperCase());
-            validarInstituto = instituteRepository.save(nuevoInstituto);
+        if (career.getName() != null) {
+            updateCareer.setName(career.getName());
+            careerRepository.save(updateCareer);
         }
-
-        return validarInstituto;
-
+        CareerDto dto = new CareerDto();
+        dto.setNameCareer(updateCareer.getName());
+        dto.setId(id);
+        return new ResponseEntity<>(dto, HttpStatus.CREATED);
 
     }
+
 }
