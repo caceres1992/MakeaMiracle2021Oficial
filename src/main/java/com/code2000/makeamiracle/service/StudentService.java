@@ -3,10 +3,16 @@ package com.code2000.makeamiracle.service;
 
 import com.code2000.makeamiracle.model.Student;
 import com.code2000.makeamiracle.repository.StudentRepository;
+import com.code2000.makeamiracle.utils.StudentDto;
+import com.code2000.makeamiracle.utils.StudentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.GetMapping;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional
@@ -14,6 +20,9 @@ public class StudentService {
 
     @Autowired
     StudentRepository repository;
+
+    @Autowired
+    StudentMapper studentMapper;
 
     public ResponseEntity<?> findAll() {
         if (repository.findAll().size() == 0) {
@@ -23,8 +32,13 @@ public class StudentService {
     }
 
     public ResponseEntity<Integer> countAllStudent() {
+        return ResponseEntity.ok(repository.findAll().size());
+    }
 
-        return  ResponseEntity.ok(repository.findAll().size());
+
+    public ResponseEntity<?> getStudentToSelect() {
+
+        return ResponseEntity.ok().body(studentMapper.toStudentDts(repository.findAll()));
     }
 
 

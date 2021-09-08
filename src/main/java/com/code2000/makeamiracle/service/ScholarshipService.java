@@ -1,8 +1,12 @@
 package com.code2000.makeamiracle.service;
 
+import com.code2000.makeamiracle.config.ResourceNotFundException;
 import com.code2000.makeamiracle.model.Scholarship;
 import com.code2000.makeamiracle.repository.ScholarshipRepository;
+import com.code2000.makeamiracle.utils.MapStructMapperImpl;
+import com.code2000.makeamiracle.utils.ScholarShipDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,18 +19,24 @@ public class ScholarshipService {
 
     @Autowired
     ScholarshipRepository repository;
-
-
+    @Autowired
+    MapStructMapperImpl mapperScholarShip;
 
 
     public List<Scholarship> findAll() {
         return repository.findAll();
     }
-    public List<Scholarship> findAllDetails() {
-        return repository.findAll();
+
+
+    public int countScholarShip() {
+        return repository.findAll().size();
     }
 
+    public ResponseEntity<ScholarShipDto> findDetailById(Long id) throws ResourceNotFundException {
 
+        Scholarship scholarship = repository.findById(id).orElseThrow(() -> new ResourceNotFundException("ScholarShip Not found"));
+        return new ResponseEntity<>(mapperScholarShip.toScholarShipDtsDetail(scholarship), HttpStatus.OK);
+    }
 
 
     public ResponseEntity<Scholarship> addScholarship(Scholarship scholarship) {

@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/student")
+@RequestMapping("/students")
 @CrossOrigin
 public class StudentCotroller {
 
@@ -22,6 +22,12 @@ public class StudentCotroller {
     @GetMapping
     public ResponseEntity<?> findAll() {
         return service.findAll();
+    }
+
+
+    @GetMapping("/select")
+    public ResponseEntity<?> getStudentToSelect() {
+        return service.getStudentToSelect();
     }
 
     @GetMapping("/count")

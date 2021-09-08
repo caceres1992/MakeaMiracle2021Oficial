@@ -1,5 +1,6 @@
 package com.code2000.makeamiracle.controller;
 
+import com.code2000.makeamiracle.config.ResourceNotFundException;
 import com.code2000.makeamiracle.model.Scholarship;
 import com.code2000.makeamiracle.service.ScholarshipService;
 import com.code2000.makeamiracle.utils.ScholarShipDto;
@@ -18,7 +19,7 @@ import java.util.Map;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/scholarship")
+@RequestMapping("/scholarships")
 @CrossOrigin
 public class ScholarShipController {
 
@@ -31,6 +32,16 @@ public class ScholarShipController {
     @GetMapping
     public ResponseEntity<List<ScholarShipDto>> findByNameInstiteAndCarrerAndSponsor() {
         return ResponseEntity.ok(scholarShipDto.toScholarShipDts(service.findAll()));
+    }
+
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<ScholarShipDto> findDetailById(@PathVariable Long id) throws ResourceNotFundException {
+        return service.findDetailById(id);
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<?> countScholarShip() {
+        return ResponseEntity.ok().body(service.countScholarShip());
     }
 
     @PostMapping

@@ -10,6 +10,7 @@ import java.util.List;
 @Mapper
 public interface IScholarShipDto {
   ScholarShipDto toScholarshipDto(Scholarship scholarship);
-    List<ScholarShipDto> toScholarShipDts(List<Scholarship> scholarships);
+  List<ScholarShipDto> toScholarShipDts(List<Scholarship> scholarships);
+  ScholarShipDto  toScholarShipDtsDetail(Scholarship scholarship);
 
 }

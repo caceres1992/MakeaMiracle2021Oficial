@@ -32,13 +32,15 @@ public class MapStructMapperImpl implements IScholarShipDto {
         dto.setSponsorFullName(scholarship.getSponsor().getName().concat(" ").concat(scholarship.getSponsor().getLastName()));
         dto.setStudentFullName(firstNameStudent.concat(" ").concat(firstLastnameStudent));
         dto.setInstituteName(scholarship.getCareer().getInstitute().getName());
+        dto.setDescription(scholarship.getObservation());
+        dto.setFinishAt(scholarship.getFinishAt());
         dto.setStudentCode(scholarship.getStudentCode());
         dto.setCreateAt(scholarship.getCreteAt());
         dto.setStatus(scholarship.getStatus());
 
-
         return dto;
     }
+
 
     @Override
     public List<ScholarShipDto> toScholarShipDts(List<Scholarship> scholarships) {
@@ -50,6 +52,28 @@ public class MapStructMapperImpl implements IScholarShipDto {
             list.add(toScholarshipDto(scholarship));
         }
         return list;
+    }
+
+    @Override
+    public ScholarShipDto toScholarShipDtsDetail(Scholarship scholarship) {
+
+        ScholarShipDto dto = new ScholarShipDto();
+
+        String nameStudent = scholarship.getStudent().getName();
+        String lastnameStudent = scholarship.getStudent().getLastName();
+
+        dto.setCareerName(scholarship.getCareer().getName());
+        dto.setSponsorFullName(scholarship.getSponsor().getName().concat(" ").concat(scholarship.getSponsor().getLastName()));
+        dto.setStudentFullName(nameStudent.concat(" ").concat(lastnameStudent));
+        dto.setInstituteName(scholarship.getCareer().getInstitute().getName());
+        dto.setDescription(scholarship.getObservation());
+        dto.setFinishAt(scholarship.getFinishAt());
+        dto.setStudentCode(scholarship.getStudentCode());
+        dto.setCreateAt(scholarship.getCreteAt());
+        dto.setStatus(scholarship.getStatus());
+
+
+        return dto;
     }
 
 
