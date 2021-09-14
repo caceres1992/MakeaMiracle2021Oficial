@@ -34,8 +34,8 @@ public class ScholarShipController {
         return ResponseEntity.ok(scholarShipDto.toScholarShipDts(service.findAll()));
     }
 
-    @GetMapping("/pagination/{pageNo}/{pageSize}")
-    public ResponseEntity<List<ScholarShipDto>> findAll2(@PathVariable int pageNo, @PathVariable int pageSize) {
+    @GetMapping("/{pageNo}/{pageSize}")
+    public ResponseEntity<List<ScholarShipDto>> paginatorScholarShipList(@PathVariable int pageNo, @PathVariable int pageSize) {
         return ResponseEntity.ok(service.findAll2(pageNo, pageSize));
     }
 
