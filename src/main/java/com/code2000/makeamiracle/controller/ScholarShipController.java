@@ -34,6 +34,11 @@ public class ScholarShipController {
         return ResponseEntity.ok(scholarShipDto.toScholarShipDts(service.findAll()));
     }
 
+    @GetMapping("/pagination/{pageNo}/{pageSize}")
+    public ResponseEntity<List<ScholarShipDto>> findAll2(@PathVariable int pageNo, @PathVariable int pageSize) {
+        return ResponseEntity.ok(service.findAll2(pageNo, pageSize));
+    }
+
     @GetMapping("/detail/{id}")
     public ResponseEntity<ScholarShipDto> findDetailById(@PathVariable Long id) throws ResourceNotFundException {
         return service.findDetailById(id);
@@ -50,7 +55,7 @@ public class ScholarShipController {
     }
 
 
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<?> updateScholarShip(@RequestBody Scholarship scholarship, @PathVariable Long id) {
 
         Map<String, Object> response = new HashMap<>();

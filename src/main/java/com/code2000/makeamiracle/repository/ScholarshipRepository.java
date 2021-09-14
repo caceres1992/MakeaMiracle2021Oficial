@@ -1,14 +1,18 @@
 package com.code2000.makeamiracle.repository;
 
 import com.code2000.makeamiracle.model.Scholarship;
+import javafx.scene.control.Pagination;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 
 @Repository
 public interface ScholarshipRepository extends JpaRepository<Scholarship, Long> {
+
+
 
 //    @Query(
 ////            value = "SELECT s.name , c.name,i.name FROM scholarship sh \n" +

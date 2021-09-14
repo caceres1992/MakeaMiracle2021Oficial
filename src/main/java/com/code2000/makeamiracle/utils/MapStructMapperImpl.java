@@ -54,6 +54,18 @@ public class MapStructMapperImpl implements IScholarShipDto {
         return list;
     }
 
+
+    public List<ScholarShipDto> ScholarshipDtoPagination(List<Scholarship> scholarships) {
+        if (scholarships == null) {
+            return null;
+        }
+        List<ScholarShipDto> list = new ArrayList<>(scholarships.size());
+        for (Scholarship scholarship : scholarships) {
+            list.add(toScholarshipDto(scholarship));
+        }
+        return list;
+    }
+
     @Override
     public ScholarShipDto toScholarShipDtsDetail(Scholarship scholarship) {
 

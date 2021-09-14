@@ -6,6 +6,9 @@ import com.code2000.makeamiracle.repository.ScholarshipRepository;
 import com.code2000.makeamiracle.utils.MapStructMapperImpl;
 import com.code2000.makeamiracle.utils.ScholarShipDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -25,6 +28,15 @@ public class ScholarshipService {
 
     public List<Scholarship> findAll() {
         return repository.findAll();
+    }
+
+    public List<ScholarShipDto> findAll2(int pageNo, int pageSize) {
+        Pageable paging = PageRequest.of(pageNo, pageSize);
+
+//        List<ScholarShipDto> dto = mapperScholarShip.toScholarShipDts(repository.findAll());
+        Page<Scholarship> pagedResult = repository.findAll(paging);
+        Page<ScholarShipDto> pageResult = pagedResult.map(scholarship -> mapperScholarShip.toScholarshipDto(scholarship));
+        return pageResult.toList();
     }
 
 
@@ -61,6 +73,14 @@ public class ScholarshipService {
         }
         if (scholarship.getStudentCode() != null) {
             scholarshipUpdate.setStudentCode(scholarship.getStudentCode());
+        }
+
+        if (scholarship.getObservation() != null) {
+            scholarshipUpdate.setStudentCode(scholarship.getObservation());
+        }
+
+        if (scholarship.getStatus() != null) {
+            scholarshipUpdate.setStudentCode(scholarship.getStatus());
         }
         return ResponseEntity.ok().body(repository.save(scholarshipUpdate));
     }
