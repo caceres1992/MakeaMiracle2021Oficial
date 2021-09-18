@@ -30,6 +30,11 @@ public class IntituteService {
 
     }
 
+    public ResponseEntity<Integer> countAllInstitute() {
+        return ResponseEntity.ok(repository.findAll().size());
+
+    }
+
 
     public ResponseEntity<String> addMoreCareer(InstituteDto dto) {
 

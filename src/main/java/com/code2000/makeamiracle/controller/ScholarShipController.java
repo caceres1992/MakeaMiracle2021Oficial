@@ -70,5 +70,9 @@ public class ScholarShipController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+    @PatchMapping("/status/{id}")
+    public ResponseEntity<Scholarship> updateStatusSandObservationScholarShip(@PathVariable Long id, @RequestBody Scholarship status) throws ResourceNotFundException {
+        return service.updateStatusSandObservationScholarShip(id, status);
 
+    }
 }

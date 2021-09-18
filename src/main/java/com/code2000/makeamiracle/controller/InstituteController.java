@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/institute")
+@RequestMapping("/institutes")
 @CrossOrigin
 public class InstituteController {
 
@@ -27,6 +27,11 @@ public class InstituteController {
 
         return service.findAllInstitute();
 
+    }
+
+    @GetMapping("/count")
+    public ResponseEntity<Integer> countAllInstitute() {
+        return service.countAllInstitute();
     }
 
     @PutMapping("/{id}")

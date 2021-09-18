@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -51,14 +52,31 @@ public class ScholarshipService {
     }
 
 
+    public ResponseEntity<Scholarship> updateStatusSandObservationScholarShip(Long id, Scholarship scholarshipStatus) throws ResourceNotFundException {
+        Scholarship scholarship = repository.findById(id).orElseThrow(() -> new ResourceNotFundException("ScholarShip Not found"));
+        System.out.println(scholarshipStatus.getObservation());
+        System.out.println(scholarshipStatus.getStatus());
+
+        if (scholarshipStatus.getStatus() != null) {
+            scholarship.setStatus(scholarshipStatus.getStatus());
+
+        }
+        if (scholarshipStatus.getObservation() != null) {
+            scholarship.setObservation(scholarshipStatus.getObservation());
+        }
+
+        if (scholarshipStatus.getStatus() != null || scholarshipStatus.getObservation() != null) {
+            scholarship.setFinishAt(LocalDate.now());
+        }
+
+
+        return ResponseEntity.ok(repository.save(scholarship));
+    }
+
     public ResponseEntity<Scholarship> addScholarship(Scholarship scholarship) {
         return ResponseEntity.ok(repository.save(scholarship));
     }
 
-    public ResponseEntity<Scholarship> findById(Long id) {
-        Scholarship scholarship = repository.findById(id).orElseThrow(() -> new RuntimeException("Scholarship Not found"));
-        return ResponseEntity.ok().body(scholarship);
-    }
 
     public ResponseEntity<Scholarship> updateScholarShip(Long id, Scholarship scholarship) {
         Scholarship scholarshipUpdate = repository.findById(id).orElseThrow(() -> new RuntimeException("Scholarship Not found"));
