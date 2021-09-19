@@ -5,6 +5,7 @@ import com.code2000.makeamiracle.model.Scholarship;
 import com.code2000.makeamiracle.repository.ScholarshipRepository;
 import com.code2000.makeamiracle.utils.MapStructMapperImpl;
 import com.code2000.makeamiracle.utils.ScholarShipDto;
+import com.code2000.makeamiracle.utils.ScholarShipRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,10 +32,14 @@ public class ScholarshipService {
         return repository.findAll();
     }
 
+    public ResponseEntity<ScholarShipRequest> findScholarShipById(Long id) throws ResourceNotFundException {
+        Scholarship scholarship = repository.findById(id).orElseThrow(() -> new ResourceNotFundException("ScholarShip Not found"));
+        return new ResponseEntity<>(mapperScholarShip.scholarShipRequest(scholarship), HttpStatus.OK);
+    }
+
     public List<ScholarShipDto> findAll2(int pageNo, int pageSize) {
         Pageable paging = PageRequest.of(pageNo, pageSize);
 
-//        List<ScholarShipDto> dto = mapperScholarShip.toScholarShipDts(repository.findAll());
         Page<Scholarship> pagedResult = repository.findAll(paging);
         Page<ScholarShipDto> pageResult = pagedResult.map(scholarship -> mapperScholarShip.toScholarshipDto(scholarship));
         return pageResult.toList();

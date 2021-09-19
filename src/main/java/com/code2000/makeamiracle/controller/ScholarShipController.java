@@ -5,6 +5,7 @@ import com.code2000.makeamiracle.model.Scholarship;
 import com.code2000.makeamiracle.service.ScholarshipService;
 import com.code2000.makeamiracle.utils.ScholarShipDto;
 import com.code2000.makeamiracle.utils.IScholarShipDto;
+import com.code2000.makeamiracle.utils.ScholarShipRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,15 +55,12 @@ public class ScholarShipController {
         return ResponseEntity.ok().body(service.addScholarship(scholarship));
     }
 
-
     @PutMapping("/{id}")
     public ResponseEntity<?> updateScholarShip(@RequestBody Scholarship scholarship, @PathVariable Long id) {
-
         Map<String, Object> response = new HashMap<>();
         try {
             response.put("scholarship", service.updateScholarShip(id, scholarship));
             response.put("menssage", "succees");
-
         } catch (Exception e) {
             response.put("menssage", "fail");
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -73,6 +71,10 @@ public class ScholarShipController {
     @PatchMapping("/status/{id}")
     public ResponseEntity<Scholarship> updateStatusSandObservationScholarShip(@PathVariable Long id, @RequestBody Scholarship status) throws ResourceNotFundException {
         return service.updateStatusSandObservationScholarShip(id, status);
+    }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ScholarShipRequest> getAllId(@PathVariable Long id) throws ResourceNotFundException {
+        return service.findScholarShipById(id);
     }
 }
